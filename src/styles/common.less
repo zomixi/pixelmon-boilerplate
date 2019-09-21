@@ -1,0 +1,17 @@
+/* 常用样式类,组件特殊的样式请不要使用这种全局定义的方式 */
+@import "./theme.less";
+
+.color-theme {
+  color: @primary-color;
+}
+
+.content-query-panel {
+  padding: 16px;
+  .ant-form-item {
+    margin-bottom: 8px;
+  }
+
+  + p-table .ant-table-title {
+    padding-top: 0;
+  }
+}

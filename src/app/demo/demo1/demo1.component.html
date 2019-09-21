@@ -1,0 +1,87 @@
+<form
+  nz-form
+  class="content-query-panel"
+  [formGroup]="validateForm"
+  (ngSubmit)="submitForm()"
+>
+  <div nz-row [nzGutter]="8">
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
+      <nz-form-item>
+        <nz-form-label nzSpan="8" nzFor="field1">商品名称</nz-form-label>
+        <nz-form-control nzSpan="16">
+          <input nz-input formControlName="field1" id="field1" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
+      <nz-form-item>
+        <nz-form-label nzSpan="8" nzFor="field2">所属客户</nz-form-label>
+        <nz-form-control nzSpan="16">
+          <input nz-input id="field2" formControlName="field2" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
+      <nz-form-item>
+        <nz-form-label nzSpan="8" nzFor="field3">状态</nz-form-label>
+        <nz-form-control nzSpan="16">
+          <nz-select formControlName="field3" id="field3">
+            <nz-option nzLabel="启用" nzValue="active"></nz-option>
+            <nz-option nzLabel="禁用" nzValue="inactive"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="6">
+      <div nz-row nzType="flex" nzAlign="middle" nzJustify="end">
+        <button nz-button nzType="primary">查询</button>
+        <button nz-button>清空</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<p-table
+  #table
+  [data]="tableData"
+  [(columns)]="columns"
+  [showCheckbox]="true"
+  [(selections)]="selections"
+  [scroll]="{ x: '1200px' }"
+  [loading]="tableLoading"
+  [titleTemplate]="titleTemplate"
+  [fixedPagination]="true"
+  (load)="load($event)"
+  (sort)="sort($event)"
+>
+  <!-- 自定义单元格 -->
+  <p-tableCell field="email">
+    <ng-template let-data>
+      <a>{{ data.email }}</a>
+    </ng-template>
+  </p-tableCell>
+
+  <p-tableCell field="operation">
+    <ng-template let-data>
+      <a>编辑</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a>删除</a>
+    </ng-template>
+  </p-tableCell>
+</p-table>
+
+<ng-template #titleTemplate>
+  <div nz-row nzType="flex" nzAlign="middle" nzJustify="space-between">
+    <div class="margin-left-24">
+      已选 <span class="color-theme">{{ selections.length }}</span> 条数据
+      <button nz-button nzType="primary" class="margin-left-8">新增</button>
+      <button nz-button [disabled]="!selections?.length">删除</button>
+    </div>
+    <div>
+      <button nz-button nzType="primary">
+        <i nz-icon nzType="upload"></i>
+      </button>
+      <button nz-button><i nz-icon nzType="menu"></i></button>
+    </div>
+  </div>
+</ng-template>

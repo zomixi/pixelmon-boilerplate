@@ -1,0 +1,101 @@
+<nz-layout class="layout">
+  <!-- 头部 -->
+  <nz-header class="header">
+    <!-- logo -->
+    <div class="logo"></div>
+    <!-- 头部菜单 -->
+    <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
+      <li
+        nz-menu-item
+        *ngFor="let menu of menusSrv.menus || []"
+        [nzSelected]="menu.selected"
+        (click)="menuChange(menu)"
+      >
+        {{ menu.title }}
+      </li>
+    </ul>
+  </nz-header>
+  <nz-layout class="main-layout">
+    <nz-sider
+      nzCollapsible
+      [nzTrigger]="null"
+      [(nzCollapsed)]="menusSrv.isCollapsed"
+      nzWidth="200px"
+      nzTheme="light"
+    >
+      <div class="sider">
+        <!-- 菜单搜索 -->
+        <div class="menu-search">
+          <input
+            nz-input
+            placeholder="请输入"
+            [(ngModel)]="menusSrv.searchValue"
+            (keydown.enter)="menusSrv.menuSearch()"
+          />
+        </div>
+        <!-- 侧边菜单 -->
+        <div class="sider-menu">
+          <ul
+            nz-menu
+            nzMode="inline"
+            [nzInlineCollapsed]="menusSrv.isCollapsed"
+          >
+            <ng-container
+              *ngTemplateOutlet="
+                menuTpl;
+                context: { $implicit: menusSrv.siderMenus }
+              "
+            ></ng-container>
+            <ng-template #menuTpl let-menus>
+              <ng-container *ngFor="let menu of menus">
+                <li
+                  *ngIf="!menu.children"
+                  nz-menu-item
+                  [nzPaddingLeft]="(menu.level - 1) * 24"
+                  [nzDisabled]="menu.disabled"
+                  [nzSelected]="menu.selected"
+                  nzMatchRouter
+                >
+                  <i nz-icon [nzType]="menu.icon" *ngIf="menu.icon"></i>
+                  <a [routerLink]="menu.routerLink">{{ menu.title }}</a>
+                </li>
+                <li
+                  *ngIf="menu.children"
+                  nz-submenu
+                  [nzPaddingLeft]="(menu.level - 1) * 24"
+                  [(nzOpen)]="menu.open"
+                  [nzTitle]="menu.title"
+                  [nzIcon]="menu.icon"
+                  [nzDisabled]="menu.disabled"
+                >
+                  <ul>
+                    <ng-container
+                      *ngTemplateOutlet="
+                        menuTpl;
+                        context: { $implicit: menu.children }
+                      "
+                    ></ng-container>
+                  </ul>
+                </li>
+              </ng-container>
+            </ng-template>
+          </ul>
+        </div>
+        <div class="collapse-trigger" (click)="menusSrv.collapse()">
+          <ng-container *ngIf="!menusSrv.isCollapsed">
+            <i nz-icon nzType="double-left"></i> 折叠面板
+          </ng-container>
+          <i nz-icon *ngIf="menusSrv.isCollapsed" nzType="double-right"></i>
+        </div>
+      </div>
+    </nz-sider>
+    <nz-layout class="inner-layout">
+      <!-- 路由复用栏 -->
+      <reuse-tab [mode]="2"></reuse-tab>
+      <!-- 主体 -->
+      <nz-content class="content">
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
