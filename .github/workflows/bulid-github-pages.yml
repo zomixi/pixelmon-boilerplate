@@ -23,11 +23,10 @@ jobs:
     - name: Install dependencies 
       run: npm install
       
-    - name: Install dependencies 
-      run: npm install @pixelmon/pikachu@0.1.9-1fe75e7
-      
-    - name: Build
-      run: npm run build
-      
     - name: Ng
       run: ng version
+      
+    - name: Build
+      run: git push
+      
+
