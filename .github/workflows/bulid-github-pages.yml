@@ -23,8 +23,9 @@ jobs:
     - name: Install dependencies 
       run: npm install
       
-    - name: Ng
-      run: ng version
+    - name: Display the path
+      run: echo ${env:PATH}
+      shell: pwsh
       
     - name: Build
       run: git push
