@@ -7,9 +7,9 @@ on:
 
 jobs:
   build:
-
+  
     runs-on: ubuntu-latest
-
+    
     steps:
     
     - name: Checkout master1
@@ -22,8 +22,8 @@ jobs:
         
     - name: Install dependencies 
       run: npm install
-      
-   - name: Display the path
+
+    - name: Display the path
       run: echo ${PATH}
       shell: bash
       
