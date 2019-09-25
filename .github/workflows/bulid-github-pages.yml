@@ -12,7 +12,7 @@ jobs:
 
     steps:
     
-    - name: Checkout master
+    - name: Checkout master1
       uses: actions/checkout@master
       
     - name: Setup Node.js
