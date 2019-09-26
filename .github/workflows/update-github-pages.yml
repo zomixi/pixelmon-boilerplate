@@ -1,4 +1,4 @@
-name: bulid github pages
+name: update github pages
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout master
+      - name: Git clone
         uses: actions/checkout@master
 
       - name: Checkout master
@@ -26,6 +26,8 @@ jobs:
 
       - name: Push to master
         run: |
+          git add dist
+          git commit -m "update github pages"
           git config user.email "zomixi@qq.com"
           git config user.name "zomixi"
           git push -u origin master
