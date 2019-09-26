@@ -25,6 +25,7 @@ jobs:
       #   run: npm install
 
       - name: Push to master
-        run: git config user.email "zomixi@qq.com"
-        run: git config user.name "zomixi"
-        run: git push -u origin master
+        run: |
+          git config user.email "zomixi@qq.com"
+          git config user.name "zomixi"
+          git push -u origin master
