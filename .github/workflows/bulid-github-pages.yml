@@ -14,6 +14,7 @@ jobs:
     
     - name: Checkout master1
       uses: actions/checkout@master
+      run: git switch -c master
       
     - name: Setup Node.js
       uses: actions/setup-node@v1.1.0
