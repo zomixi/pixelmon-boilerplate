@@ -3,32 +3,30 @@ name: bulid github pages
 on:
   push:
     branches:
-    - master
+      - master
 
 jobs:
   build:
-  
     runs-on: ubuntu-latest
-    
+
     steps:
-    
-    - name: Checkout master1
-      uses: actions/checkout@master
-      run: git switch -c master
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v1.1.0
-      with:
-        node-version: '10.x'
-        
-    - name: Install dependencies 
-      run: npm install
+      - name: Checkout master
+        uses: actions/checkout@master
 
-    - name: Display the path
-      run: echo ${PATH}
-      shell: bash
-      
-    - name: Push to master
-      run: git push origin HEAD:master
-      
+      - name: 111
+        run: git switch -c master
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v1.1.0
+        with:
+          node-version: "10.x"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Display the path
+        run: echo ${PATH}
+        shell: bash
+
+      - name: Push to master
+        run: git push origin HEAD:master
