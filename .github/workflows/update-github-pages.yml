@@ -10,24 +10,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Git clone
-        uses: actions/checkout@master
-
-      - name: Checkout master
-        run: git switch -c origin/master
-
       - name: Setup Node.js
         uses: actions/setup-node@v1.1.0
         with:
           node-version: "10.x"
 
-      # - name: Install dependencies
-      #   run: npm install
+      - name: Git Clone
+        uses: actions/checkout@master
 
-      - name: Push to master
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Ng Build
+        run: node ./node_modules/@angular/cli/bin/ng build --prod --outputPath=dist --base-href=/pixelmon-boilerplate/
+
+      - name: Git Init
         run: |
-          git add dist
-          git commit -m "update github pages"
+          cd ./dist
+          git init
+
+      - name: Git Commit
+        run: |
+          cd ./dist
+          git add .
           git config user.email "zomixi@qq.com"
           git config user.name "zomixi"
-          git push -u origin master
+          git commit -m "update github pages"
+
+      - name: Git Push
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: |
+          cd ./dist
+          git push --set-upstream --force --quiet "https://${ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" master:gh-pages
